@@ -20,8 +20,6 @@ _start:
   mov rdi, 0
   syscall
 
-  ret
-
 segment .data
   hello: db "Hello, World", 10
   hello_size: equ $-hello
