@@ -1,4 +1,6 @@
 ;; https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
+;; https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md
+;; https://www.nasm.us/doc/nasmdoc0.html
 
 %define SYS_WRITE 1
 %define SYS_EXIT 60
