@@ -36,8 +36,6 @@ int main(void) {
 
   ((void(*)(void))(file_mem))();
 
-  puts(" World");
-
   close(fd);
   munmap(file_mem, file_size);
   return 0;

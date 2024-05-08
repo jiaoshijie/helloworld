@@ -20,5 +20,5 @@ _start:
 
   ret
 
-hello: db "Hello,"
+hello: db "Hello, World", 10
 hello_size: equ $-hello
