@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -18,10 +19,7 @@ static void report_error(const char *msg);
  * */
 
 int main() {
-    uint8_t str_in_text[] = {
-        // H   e     l     l     o     ,     ' '   w      o     r    l     d     \n
-        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x2c, 0x20, 0x57, 0x6f, 0x72, 0x6c, 0x64, 0x0a,
-    };
+    char str_in_text[] = "Hello, World\n";
 
     Elf64_Ehdr elf_header = {
         .e_ident = {
@@ -48,14 +46,16 @@ int main() {
         0xb8, 0x01, 0x00, 0x00, 0x00,   // mov rax, 1
         0xbf, 0x01, 0x00, 0x00, 0x00,   // mov rdi, 1
         0x48, 0x8d, 0x34, 0x25,         // lea
-        0x00, 0x00, 0x00, 0x00,         // [placeholder] the addr of hello
-        0xba, 0x0d, 0x00, 0x00, 0x00,   // mov rdx, the length of hello
+        0x00, 0x00, 0x00, 0x00,         // [placeholder] the addr of str_in_text
+        0xba,                           // mov rdx,
+        0x00, 0x00, 0x00, 0x00,         // [placeholder] the length of str_in_text
         0x0f, 0x05,                     // syscall
         0xb8, 0x3c, 0x00, 0x00, 0x00,   // mov rax, 60
         0xbf, 0x00, 0x00, 0x00, 0x00,   // mov rdi, 0
         0x0f, 0x05,                     // syscall
     };
     *(uint32_t *)&text[14] = MAGIC_ENTRY_POINT + sizeof(Elf64_Ehdr) + sizeof(Elf64_Phdr);
+    *(uint32_t *)&text[19] = strlen(str_in_text);
 
     Elf64_Phdr prog_header = {
         .p_type = PT_LOAD,
