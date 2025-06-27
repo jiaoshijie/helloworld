@@ -15,7 +15,7 @@ static void report_error(const char *msg);
 /*
  * 1. elf header
  * 2. program header
- * 3. str in text
+ * 3. TEXT_TO_PRINT
  * 4. text
  * 5. section header is not needed
  * */
